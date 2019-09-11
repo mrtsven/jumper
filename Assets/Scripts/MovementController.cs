@@ -5,15 +5,22 @@ using UnityEngine;
 public class MovementController : MonoBehaviour
 {
     public float speed = 1;
-
-    // private Vector3 m_EulerAngleVelocity;
+    public float rotationSpeed = 1;
+    public float jumpForce = 1;
 
     private Rigidbody rb;
     private Vector3 movement;
+    private bool isGrounded;
+    private Vector3 jump;
 
     void Start ()
     {
         rb = GetComponent<Rigidbody>();
+        jump = new Vector3(0, 2f, 0);
+    }
+
+    void OnCollisionStay(){
+        isGrounded = true;
     }
 
     void Update(){
@@ -22,11 +29,16 @@ public class MovementController : MonoBehaviour
 
         rb.MovePosition(transform.position + move);
 
-        if(Input.GetAxis("Mouse X") < 0){
-            transform.Rotate(Vector3.up * speed / 2);
+        if(Input.GetAxis("Horizontal") < 0){
+            transform.Rotate(Vector3.up * rotationSpeed);
         }
-        if(Input.GetAxis("Mouse X") > 0){
-            transform.Rotate(Vector3.up * -speed / 2);
+        if(Input.GetAxis("Horizontal") > 0){
+            transform.Rotate(Vector3.up * -rotationSpeed);
         }
+
+        if(Input.GetKeyDown(KeyCode.Space) && isGrounded){
+            rb.AddForce(jump * jumpForce, ForceMode.Impulse);
+            isGrounded = false;
+        }        
     }
 }
