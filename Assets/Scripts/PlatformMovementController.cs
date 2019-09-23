@@ -8,16 +8,29 @@ public class PlatformMovementController : MonoBehaviour
     public float forwardFromOrigin;
     public float backwardsFromOrigin;
 
-    private Rigidbody rb;
     private float direction = 1;
     private float originPosition;
 
     void Start(){
-        rb = GetComponent<Rigidbody>();
         originPosition = transform.position.z;
     }
 
-    // Update is called once per frame
+    private void OnCollisionEnter(Collision collision){
+        var player = collision.collider.transform.parent;
+
+        if(player.tag == "Player"){
+            player.transform.SetParent(transform);
+        }
+     }
+ 
+    private void OnCollisionExit(Collision collision){
+        var player = collision.collider.transform.parent;
+
+        if(player.tag == "Player"){
+            player.transform.SetParent(null);
+        }
+     }    
+
     void Update()
     {
         if(transform.position.z > originPosition + forwardFromOrigin)
@@ -28,6 +41,6 @@ public class PlatformMovementController : MonoBehaviour
             direction = 1;
         }
 
-        rb.MovePosition(transform.position + Vector3.forward * direction * speed);
+        transform.position = transform.position + Vector3.forward * direction * speed * Time.deltaTime;
     }
 }

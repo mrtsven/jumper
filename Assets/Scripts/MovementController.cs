@@ -24,16 +24,18 @@ public class MovementController : MonoBehaviour
     }
 
     void Update(){
-        Vector3 move = new Vector3(0, 0, Input.GetAxis("Vertical")).normalized;
-        move = transform.TransformDirection(move.normalized) * speed * Time.deltaTime;
+        float moveVertical = Input.GetAxis("Vertical");
 
-        rb.MovePosition(transform.position + move);
+        Vector3 move = (new Vector3(0, 0.0f, moveVertical) * speed * Time.deltaTime).normalized;
+        move = transform.TransformDirection(move);
 
+        rb.MovePosition(transform.position + move * speed * Time.deltaTime);
+        
         if(Input.GetAxis("Horizontal") < 0){
-            transform.Rotate(Vector3.up * rotationSpeed);
+            transform.Rotate(Vector3.up * -rotationSpeed);
         }
         if(Input.GetAxis("Horizontal") > 0){
-            transform.Rotate(Vector3.up * -rotationSpeed);
+            transform.Rotate(Vector3.up * rotationSpeed);
         }
 
         if(Input.GetKeyDown(KeyCode.Space) && isGrounded){
