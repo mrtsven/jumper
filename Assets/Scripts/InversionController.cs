@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InversionController : MonoBehaviour
 {
-    private float pullForce = 200;
+    private float pullForce = 100;
 
     private Rigidbody playerBody;
 

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -56,11 +57,21 @@ public class PlayerController : MonoBehaviour
             if(GameObject.FindGameObjectsWithTag("Bullet").Length < 3)
                 ShootBullet();
         } 
+        
+        checkEndlessfall();
     }
 
     private void ShootBullet()
     {
         //Shoot the bullet
         Instantiate(Bullet, transform.position + Vector3.forward * 0.5f, transform.rotation);
+    }
+
+    private void checkEndlessfall()
+    {
+        if(transform.position.y < -25)
+        {
+            SceneManager.LoadScene(0);
+        }
     }
 }
