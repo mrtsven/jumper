@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlatformMovementController : MonoBehaviour
+public class PlatformMovementUpDownMovement : MonoBehaviour
 {
     public float speed = 1;
     public float forwardFromOrigin;
@@ -15,21 +15,21 @@ public class PlatformMovementController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        originPosition = transform.position.z;
+        originPosition = transform.position.y;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (transform.position.z > originPosition + forwardFromOrigin)
+        if (transform.position.y > originPosition + forwardFromOrigin)
         {
             direction = -1;
         }
-        else if (transform.position.z < originPosition + backwardsFromOrigin)
+        else if (transform.position.y < originPosition + backwardsFromOrigin)
         {
             direction = 1;
         }
 
-        rb.MovePosition(transform.position + Vector3.forward * direction * speed * Time.deltaTime);
+        rb.MovePosition(transform.position + Vector3.up * direction * speed * Time.deltaTime);
     }
 }

@@ -7,11 +7,11 @@ public class CameraController : MonoBehaviour
     public Transform player;
 
     private Vector3 offset;
-    private MovementController movement;
+    private PlayerController movement;
 
     void Start ()
     {
-        movement = player.GetComponent("MovementController") as MovementController;
+        movement = player.GetComponent("PlayerController") as PlayerController;
         offset = transform.position - player.position;
     }
 
